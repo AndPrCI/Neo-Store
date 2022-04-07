@@ -26,7 +26,8 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew assembleDebug
-        run: mkdir -p app/build/outputs/apk/debug
+       
+      - run: mkdir -p app/build/outputs/apk/debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v2.2.0
