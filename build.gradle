@@ -104,6 +104,7 @@ android {
     lint {
         ignore 'InvalidVectorPath'
         warning 'InvalidPackage'
+        checkReleaseBuilds false
     }
     if (keystorePropertiesFile.exists()) {
         def keystoreProperties = new Properties()
