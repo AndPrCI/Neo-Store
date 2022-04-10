@@ -1,6 +1,10 @@
 package com.looker.droidify.database.entity
 
 import androidx.room.Entity
+import com.looker.droidify.ROW_PACKAGE_NAME
+import com.looker.droidify.ROW_REPOSITORY_ID
+import com.looker.droidify.TABLE_PRODUCT_NAME
+import com.looker.droidify.TABLE_PRODUCT_TEMP_NAME
 import com.looker.droidify.entity.Author
 import com.looker.droidify.entity.Donate
 import com.looker.droidify.entity.ProductItem
@@ -12,13 +16,13 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 // TODO Add Product Extras to handle favorite lists etc..
-@Entity(tableName = "product", primaryKeys = ["repositoryId", "packageName"])
+@Entity(tableName = TABLE_PRODUCT_NAME, primaryKeys = [ROW_REPOSITORY_ID, ROW_PACKAGE_NAME])
 @Serializable
 open class Product(
     var repositoryId: Long,
     var packageName: String
 ) {
-    var name: String = ""
+    var label: String = ""
     var summary: String = ""
     var description: String = ""
     var added: Long = 0L
@@ -45,7 +49,7 @@ open class Product(
     constructor(
         repositoryId: Long,
         packageName: String,
-        name: String,
+        label: String,
         summary: String,
         description: String,
         added: Long,
@@ -66,7 +70,7 @@ open class Product(
         changelog: String = "",
         whatsNew: String = ""
     ) : this(repositoryId, packageName) {
-        this.name = name
+        this.label = label
         this.summary = summary
         this.description = description
         this.added = added
@@ -104,7 +108,7 @@ open class Product(
         ProductItem(
             repositoryId,
             packageName,
-            name,
+            label,
             summary,
             icon,
             metadataIcon,
@@ -131,11 +135,11 @@ open class Product(
     }
 }
 
-@Entity(tableName = "temporary_product")
+@Entity(tableName = TABLE_PRODUCT_TEMP_NAME)
 class ProductTemp(
     repositoryId: Long,
     packageName: String,
-    name: String,
+    label: String,
     summary: String,
     description: String,
     added: Long,
@@ -158,7 +162,7 @@ class ProductTemp(
 ) : Product(
     repositoryId = repositoryId,
     packageName = packageName,
-    name = name,
+    label = label,
     summary = summary,
     description = description,
     added = added,
@@ -183,7 +187,7 @@ class ProductTemp(
 fun Product.asProductTemp(): ProductTemp = ProductTemp(
     repositoryId = repositoryId,
     packageName = packageName,
-    name = name,
+    label = label,
     summary = summary,
     description = description,
     added = added,

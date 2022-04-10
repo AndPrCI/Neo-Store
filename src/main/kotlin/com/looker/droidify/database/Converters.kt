@@ -11,23 +11,15 @@ object Converters {
     @TypeConverter
     @JvmStatic
     fun toStringList(byteArray: ByteArray): List<String> {
-        val string = byteArray.toString()
+        val string = String(byteArray)
         return if (string == "") emptyList()
-        else string.split(",")
+        else string.removeSurrounding("[", "]").split(",").filter(String::isNotEmpty)
     }
 
     @JvmName("stringListToByteArray")
     @TypeConverter
     @JvmStatic
     fun toByteArray(list: List<String>): ByteArray = list.toString().toByteArray()
-
-    @TypeConverter
-    @JvmStatic
-    fun toProduct(byteArray: ByteArray) = Product.fromJson(String(byteArray))
-
-    @TypeConverter
-    @JvmStatic
-    fun toByteArray(product: Product) = product.toJSON().toByteArray()
 
     @TypeConverter
     @JvmStatic
